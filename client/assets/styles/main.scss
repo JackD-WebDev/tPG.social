@@ -1,0 +1,14 @@
+@use 'misc' as m;
+@use 'variables' as v;
+@use 'components' as c;
+
+body {
+	font-size: 1.6em;
+	color: var(--primary-color);
+	//background-color: hsl(146, 93%, 12%);
+	background-color: black;
+}
+
+.done {
+	color: red;
+}

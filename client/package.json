@@ -1,0 +1,30 @@
+{
+	"private": true,
+	"scripts": {
+		"build": "nuxt build",
+		"dev": "nuxt dev",
+		"generate": "nuxt generate",
+		"preview": "nuxt preview",
+		"postinstall": "nuxt prepare",
+		"test": "vitest",
+		"coverage": "vitest run --coverage",
+		"report": "vitest run --coverage --reporter=json --outputFile.json=./assets/coverage.json"
+	},
+	"devDependencies": {
+		"@types/uuid": "^8.3.4",
+		"@vitest/coverage-c8": "^0.25.3",
+		"c8": "^7.12.0",
+		"nuxt": "^3.0.0",
+		"sass": "^1.56.1",
+		"sass-loader": "^13.2.0",
+		"vite": "^3.2.4",
+		"vitest": "^0.25.3"
+	},
+	"dependencies": {
+		"@nuxt/types": "^2.15.8",
+		"@nuxt/typescript-build": "^2.1.0",
+		"@pinia/nuxt": "^0.4.5",
+		"pinia": "^2.0.26",
+		"uuid": "^9.0.0"
+	}
+}

@@ -1,0 +1,24 @@
+nav ul {
+	margin: 2rem;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+nav li {
+	flex-direction: row;
+	padding: 1rem 1.5rem;
+	margin: 0 1.75rem;
+	border-radius: 1rem;
+	// background: linear-gradient(145deg, hsl(147, 94%, 13%), hsl(146, 93%, 11%));
+	// box-shadow: 1rem 1rem 2rem hsl(147, 91%, 9%), -1rem -1rem 2rem hsl(146, 95%, 15%);
+}
+
+nav li a {
+	// text-shadow: -0.1rem -0.1rem 0.3rem hsla(147, 91%, 9%, 0.731);
+	text-decoration: none;
+	font-size: 1.5rem;
+	font-weight: bold;
+	text-transform: uppercase;
+	letter-spacing: 0.1rem;
+}
