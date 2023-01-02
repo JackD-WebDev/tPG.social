@@ -1,7 +1,7 @@
 <template>
-	<svg viewBox="0 0 362.73401 511.99998" id="css-icon">
-		<g id="layer1" transform="translate(-193.633,-276.3622)">
-			<g id="g3013" transform="translate(119,276.3622)">
+	<svg id="css-icon" viewBox="0 0 362.73401 511.99998">
+		<g transform="translate(-193.633,-276.3622)">
+			<g transform="translate(119,276.3622)">
 				<polygon
 					class="color1"
 					points="437.367,100.62 404.321,470.819 255.778,512 107.644,470.877 74.633,100.62 "

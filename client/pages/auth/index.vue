@@ -40,8 +40,8 @@
 
 <template>
 	<div>
-		<button @click="login">login</button>
-		<button @click="logout">logout</button>
+		<button @click="login">LOGIN</button>
+		<button @click="logout">LOGOUT</button>
 
 		<pre>{{ userData.message }}</pre>
 		<p v-if="userData.data">Welcome {{ userData.data.username }}</p>

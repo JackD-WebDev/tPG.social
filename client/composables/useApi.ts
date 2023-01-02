@@ -9,7 +9,9 @@ const tokenResponse = async () => {
 		baseURL,
 		method: 'GET',
 		credentials: 'include',
+
 		headers: {
+			'Access-Control-Allow-Origin': '*',
 			Referer,
 			Accept: 'application/json',
 			'Content-Type': 'application/json'
@@ -24,17 +26,18 @@ export const useApi = async (url: string, options?: FetchOptions) => {
 		token = useCookie(csrf_cookie).value;
 	}
 
-	const headers: HeadersInit = {
-		Referer,
-		Accept: 'application/json',
-		'Content-Type': 'application/json',
-		'X-XSRF-TOKEN': token,
-		...options?.headers
-	};
+	const headers: HeadersInit =
+		{
+			Referer,
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+			'X-XSRF-TOKEN': token ?? '',
+			...options?.headers
+		} ?? {};
 
 	const opts: FetchOptions = options
 		? (({ headers, ...opts }) => opts)(options)
-		: null;
+		: null ?? {};
 
 	return $fetch(url, {
 		credentials: 'include',

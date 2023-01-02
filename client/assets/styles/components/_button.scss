@@ -1,0 +1,16 @@
+button {
+	color: var(--primary-color);
+  background-color: black;
+	border: solid 5px;
+	padding: (1.2rem) (1.8rem);
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	margin: 4px 2px;
+	cursor: pointer;
+  border-radius: 1rem;
+}
+
+button::hover {
+	color: white;
+}

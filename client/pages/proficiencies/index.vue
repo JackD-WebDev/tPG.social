@@ -7,12 +7,21 @@
 		<SvgCSS />
 		<SvgDocker />
 		<SvgGSAP />
+		<SvgHTML />
+		<SvgIDEA />
+		<SvgJS />
+		<SvgLaravel />
+		<SvgMariaDB />
+		<SvgMySQL />
+		<SvgNGINX />
+		<SvgNode />
+		<SvgNuxt />
 	</div>
 </template>
 
 <style scoped>
 	svg {
-		width: 10rem;
-		height: 10rem;
+		width: 30rem;
+		height: 30rem;
 	}
 </style>

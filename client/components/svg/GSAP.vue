@@ -1,6 +1,6 @@
 <template>
 	<svg
-		id="greensock"
+		id="greensock-icon"
 		height="2500"
 		width="2157"
 		viewBox="-2.138 -2.29 314.9 359.304"
