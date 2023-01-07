@@ -9,7 +9,6 @@ client/.output
 client/.env
 client/.idea
 client/dist
-client/assets/svg
 client/assets/coverage.json
 client/coverage
 api/node_modules
