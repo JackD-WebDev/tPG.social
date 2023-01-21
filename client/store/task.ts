@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia';
 
 export interface Task {
-	id?: string;
-	title?: string;
+	id: string;
+	title: string;
 	description?: string;
 	type?: string;
 	priority?: string;
@@ -16,7 +16,7 @@ export interface Task {
 	link?: string;
 }
 
-export type Tasks = Task[] | undefined[];
+export type Tasks = Task[] | [];
 
 interface TaskState {
 	tasks: Tasks;
@@ -56,7 +56,7 @@ const getters = {
 };
 
 const actions = {
-	async addTask(taskData) {
+	async addTask(taskData: Task) {
 		const newTask: Task = {
 			id: taskData.data.task_id,
 			title: taskData.data.attributes.title,
@@ -78,17 +78,6 @@ const actions = {
 		await this.tasks.push(newTask);
 	},
 
-	// async addTask(scratchTask: ScratchTask) {
-	// 	const task: Task = {
-	// 		id: uuid(),
-	// 		...scratchTask,
-	// 		description: '',
-	// 		completed: false,
-	// 		createdAt: new Date(),
-	// 		updatedAt: new Date()
-	// 	};
-	// 	this.tasks.push(task);
-	// },
 	async removeTask(id: string) {
 		this.tasks = this.tasks.filter((task: Task) => task.id !== id);
 	},

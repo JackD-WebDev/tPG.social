@@ -1,14 +1,14 @@
 <script lang="ts" setup>
-	import { useUserStore } from '~~/store/user';
+	import { useAuthStore } from '~~/store/auth';
 
-	const userStore = useUserStore();
+	const authStore = useAuthStore();
 
 	const sessionCookie = useCookie('tpg_api_session');
 
-	let userData: any = ref('');
+	let authData: any = ref('');
 
-	const user = computed(() => {
-		return userStore.user;
+	const auth = computed(() => {
+		return authStore.auth;
 	});
 
 	const login = async () => {
@@ -20,8 +20,8 @@
 				password: 'aaaaaaaa'
 			}
 		});
-		userData.value = response;
-		userStore.fetchUser();
+		authData.value = response;
+		authStore.fetchAuth();
 	};
 
 	async function logout() {
@@ -33,8 +33,8 @@
 			expires: new Date(0)
 		});
 		sessionCookie.value = null;
-		userData.value = response;
-		userStore.$reset();
+		authData.value = response;
+		authStore.$reset();
 	}
 </script>
 
@@ -43,9 +43,9 @@
 		<button @click="login">LOGIN</button>
 		<button @click="logout">LOGOUT</button>
 
-		<pre>{{ userData.message }}</pre>
-		<p v-if="userData.data">Welcome {{ userData.data.username }}</p>
-		<p v-if="user">{{ user }}</p>
+		<pre>{{ authData.message }}</pre>
+		<p v-if="authData.data">Welcome {{ authData.data.username }}</p>
+		<p v-if="auth">{{ auth }}</p>
 
 		<!-- <h1>
 			{{ isLoggedIn ? 'LOGGED IN' : 'LOGGED OUT' }}

@@ -1,22 +1,22 @@
 <script lang="ts" setup>
 	const props = defineProps<{
-		modelValue: string
-		error: boolean
-	}>()
+		modelValue: string;
+		error: boolean;
+	}>();
 
 	const emit = defineEmits<{
-		(e: "update:modelValue", value: string): void
-		(e: "submit"): void
-	}>()
+		(e: 'update:modelValue', value: string): void;
+		(e: 'submit'): void;
+	}>();
 
 	const localState = computed({
 		get() {
-			return props.modelValue
+			return props.modelValue;
 		},
 		set(value) {
-			emit("update:modelValue", value)
+			emit('update:modelValue', value);
 		}
-	})
+	});
 </script>
 
 <template>

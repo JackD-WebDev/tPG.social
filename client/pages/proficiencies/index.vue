@@ -32,7 +32,7 @@
 	</div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 	section {
 		display: flex;
 		flex-wrap: wrap;

@@ -1,11 +1,12 @@
 <script setup lang="ts">
 	import { useTaskStore } from '~~/store/task';
 
-	const config = useRuntimeConfig();
-	console.log('Client URL:', config.CLIENT_URL);
-	if (process.server) {
-		console.log('API URL:', config.API_URL);
-	}
+	const tasks = async () => {
+		const response = await useApi('tasks', { method: 'GET' });
+		console.log('response', response);
+		return response;
+	};
+	tasks();
 
 	const taskStore = useTaskStore();
 	// const newTask = ref('');
@@ -28,8 +29,6 @@
 			method: 'POST',
 			body: JSON.stringify(apiBody)
 		});
-
-		console.log(response);
 
 		taskStore.addTask(response);
 

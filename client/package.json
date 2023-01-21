@@ -11,6 +11,7 @@
 		"report": "vitest run --coverage --reporter=json --outputFile.json=./assets/coverage.json"
 	},
 	"devDependencies": {
+		"@sidebase/nuxt-auth": "^0.3.4",
 		"@types/uuid": "^8.3.4",
 		"@vitest/coverage-c8": "^0.25.3",
 		"c8": "^7.12.0",

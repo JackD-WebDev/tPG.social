@@ -33,5 +33,6 @@
 			{{ task.completed ? 'UNDO' : 'DONE' }}
 		</button>
 		<button @click="deleteTask(task.id)">DELETE</button>
+		<NuxtLink class="btn" :to="`/tasks/${task.id}`">EDIT</NuxtLink>
 	</div>
 </template>
