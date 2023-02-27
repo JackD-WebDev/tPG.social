@@ -1,51 +1,69 @@
 import { FetchOptions } from 'unenv/runtime/fetch';
 
-let baseURL = process.env
-	? (process.env.API_URL as string)
-	: 'http://localhost:8000/api/';
-let Referer = window.location
-	? window.location.origin
-	: 'http://localhost:3000';
-let csrf_cookie = 'XSRF-TOKEN';
+interface NitroFetchOptions<T> extends FetchOptions {
+	method?:
+		| 'delete'
+		| 'get'
+		| 'GET'
+		| 'head'
+		| 'HEAD'
+		| 'PATCH'
+		| 'post'
+		| 'POST'
+		| 'put'
+		| 'PUT'
+		| 'connect'
+		| 'CONNECT'
+		| 'OPTIONS'
+		| 'options'
+		| 'TRACE'
+		| 'trace';
+	data?: T;
+}
 
-const tokenResponse = async () => {
-	await $fetch.raw('sanctum/csrf-cookie', {
-		baseURL,
-		method: 'GET',
-		credentials: 'include',
-		headers: {
-			'Access-Control-Allow-Origin': Referer,
-			Referer,
-			Accept: 'application/json',
-			'Content-Type': 'application/json'
-		}
-	});
-};
+export const useApi = async <T>(
+	url: string,
+	options?: NitroFetchOptions<T>
+) => {
+	let baseURL = 'http://localhost:8000/api/';
+	let Referer = 'http://localhost:3000';
+	let csrf_cookie = 'XSRF-TOKEN';
 
-export const useApi = async (url: string, options?: FetchOptions) => {
+	const tokenResponse = async () => {
+		await $fetch.raw('sanctum/csrf-cookie', {
+			baseURL,
+			method: 'GET',
+			credentials: 'include',
+			headers: {
+				'Access-Control-Allow-Origin': Referer,
+				Referer,
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
+			}
+		});
+	};
+
 	let token = useCookie(csrf_cookie)?.value;
 	if (!token) {
 		await tokenResponse();
-		token = useCookie(csrf_cookie).value;
+		token = useCookie(csrf_cookie)?.value;
 	}
 
-	const headers: HeadersInit =
-		{
-			Referer,
-			Accept: 'application/json',
-			'Content-Type': 'application/json',
-			'X-XSRF-TOKEN': token ?? '',
-			...options?.headers
-		} ?? {};
+	const headers: HeadersInit = {
+		Referer,
+		Accept: 'application/json',
+		'Content-Type': 'application/json',
+		'X-XSRF-TOKEN': token ?? '',
+		...(options?.headers || {})
+	};
 
-	const opts: FetchOptions = options
-		? (({ headers, ...opts }) => opts)(options)
-		: null ?? {};
+	const opts: NitroFetchOptions<string> = options
+		? (({ headers, ...opts }) => opts)(options as NitroFetchOptions<string>)
+		: { method: 'GET' };
 
 	return $fetch(url, {
 		credentials: 'include',
 		baseURL,
-		headers,
 		...opts
 	});
 };

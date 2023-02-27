@@ -8,7 +8,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Helpers\ResponseHelper;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\UserCollection;
+use App\Exceptions\UserNotFoundException;
 use App\Repositories\Contracts\UserInterface;
+
 use App\Repositories\Eloquent\Criteria\EagerLoad;
 
 class UserController extends Controller
@@ -111,13 +113,22 @@ class UserController extends Controller
      */
     public function findById($userId): JsonResponse
     {
-        $user = $this->users->findWhereFirst('id', $userId);
 
-        return $this->responseHelper->successResponse(
+        try {$user = $this->users->findWhereFirst('id', $userId);
+
+} catch (error) {
+            throw new UserNotFoundException('USER NOT FOUND');
+        }
+        
+
+        if ($user) {
+            return $this->responseHelper->successResponse(
             true,
             'USER INFORMATION RETRIEVED SUCCESSFULLY.',
             new UserResource($user),
             200
-        );
+            );
+        }
+        
     }
 }

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h1>PROFICIENCIES</h1>
+		<h2>PROFICIENCIES</h2>
 		<section>
 			<SvgBash />
 			<SvgCSS />
@@ -40,7 +40,7 @@
 		align-items: left;
 	}
 	svg {
-		width: 10rem;
-		height: 10rem;
+		width: 5rem;
+		height: 5rem;
 	}
 </style>

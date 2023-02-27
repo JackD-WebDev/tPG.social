@@ -26,3 +26,4 @@ api/yarn-error.log
 api/.idea
 api/.vscode
 supervisord.log
+node_modules

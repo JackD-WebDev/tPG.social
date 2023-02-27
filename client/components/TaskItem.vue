@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-	import { useTaskStore } from '~~/store/task';
-	import { Task } from '~~/store/task';
+	import { useTaskStore, Task } from '~~/store/task';
 
 	const props = defineProps<{
 		task: Task;
@@ -9,30 +8,34 @@
 	const task = ref(props.task);
 
 	const taskStore = useTaskStore();
-	const deleteTask = (id: string) => taskStore.removeTask(id);
+
+	const deleteTask = (id: string) => taskStore.deleteTask(id);
 
 	const updateTask = (task: Task) => {
-		const completionStatus = task.completed;
-		taskStore.updateTask(task.id, { completed: !completionStatus });
+		const completionStatus = task.data.attributes.completed;
+		taskStore.updateTask(task.data.id, { completed: !completionStatus });
 	};
 </script>
 
 <template>
 	<div>
 		<pre>{{ task }}</pre>
-		<h3 :class="{ done: task.completed }" :title="task.title">
-			{{ task.title }}
+		<h3
+			:class="{ done: task.data.attributes.completed }"
+			:title="task.data.attributes.title"
+		>
+			{{ task.data.attributes.title }}
 		</h3>
 		<p>
-			{{ task.description }}
+			{{ task.data.attributes.description }}
 		</p>
 		<p>
-			{{ task.createdAtHuman }}
+			{{ task.data.attributes.created_at_dates.created_at_human }}
 		</p>
 		<button @click="updateTask(task)">
-			{{ task.completed ? 'UNDO' : 'DONE' }}
+			{{ task.data.attributes.completed ? 'UNDO' : 'DONE' }}
 		</button>
-		<button @click="deleteTask(task.id)">DELETE</button>
-		<NuxtLink class="btn" :to="`/tasks/${task.id}`">EDIT</NuxtLink>
+		<button @click="deleteTask(task.data.id)">DELETE</button>
+		<NuxtLink class="btn" :to="`/tasks/${task.data.id}`">EDIT</NuxtLink>
 	</div>
 </template>

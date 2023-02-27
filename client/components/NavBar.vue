@@ -6,18 +6,17 @@
 				<NuxtLink to="/">HOME</NuxtLink>
 			</li>
 			<li>
-				<NuxtLink to="/#">ABOUT</NuxtLink>
-			</li>
-			<li>
-				<NuxtLink to="/proficiencies">PROFICIENCIES</NuxtLink>
-			</li>
-			<li>
 				<NuxtLink to="/#">PROJECTS</NuxtLink>
 			</li>
 			<li>
 				<NuxtLink to="/#">CONTACT</NuxtLink>
 			</li>
-
+			<li>
+				<NuxtLink to="/portfolio">PORTFOLIO</NuxtLink>
+			</li>
+			<li>
+				<NuxtLink to="/proficiencies">PROFICIENCIES</NuxtLink>
+			</li>
 			<li>
 				<NuxtLink to="/tasks">TASKS</NuxtLink>
 			</li>

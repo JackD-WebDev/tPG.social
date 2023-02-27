@@ -32,7 +32,7 @@ services:
     env_file:
       - ./env/phpmyadmin.env
     ports:
-      - '3306:80'
+      - '3300:80'
     depends_on:
       - mysql
   composer:

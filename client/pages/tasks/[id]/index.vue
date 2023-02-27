@@ -3,5 +3,5 @@
 	const routeId = computed(() => route.params.id);
 </script>
 <template>
-	<p>{{ routeId }}</p>
+	<p>Route {{ routeId }}</p>
 </template>

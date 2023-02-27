@@ -1,46 +1,60 @@
 <script setup lang="ts">
-	import { useTaskStore } from '~~/store/task';
-
-	const tasks = async () => {
-		const response = await useApi('tasks', { method: 'GET' });
-		console.log('response', response);
-		return response;
-	};
-	tasks();
+	import { useTaskStore, NewTask } from '~~/store/task';
 
 	const taskStore = useTaskStore();
-	// const newTask = ref('');
-	const newTask = useState('newTask', () => {
-		return '';
-	});
-	const error = useState('error', () => {
-		return null;
+	taskStore.fetchTasks();
+
+	const newTask = ref<NewTask>({
+		title: ''
 	});
 
-	const createNewTask = async () => {
-		const apiBody = { title: newTask.value };
+	const error = ref(false);
 
-		if (newTask.value.length <= 0) {
-			error.value = true;
-			return;
-		}
+	//OLD CODE
+	// const tasks = async () => {
+	// 		const response = await useApi('tasks', { method: 'GET' });
+	// 		console.log('response', response);
+	// 		return response;
+	// 	};
+	// 	tasks();
 
-		const response = await useApi('tasks', {
-			method: 'POST',
-			body: JSON.stringify(apiBody)
-		});
+	// 	const taskStore = useTaskStore();
+	// 	// const newTask = ref('');
+	// 	const newTask = useState('newTask', () => {
+	// 		return '';
+	// 	});
+	// 	const error = useState('error', () => {
+	// 		return null;
+	// 	});
 
-		taskStore.addTask(response);
+	// 	const createNewTask = async () => {
+	// 		const apiBody = { title: newTask.value };
 
-		newTask.value = '';
-	};
+	// 		if (newTask.value.length <= 0) {
+	// 			error.value = true;
+	// 			return;
+	// 		}
 
-	error.value = false;
+	// 		const response = await useApi('tasks', {
+	// 			method: 'POST',
+	// 			body: JSON.stringify(apiBody)
+	// 		});
+
+	// 		taskStore.addTask(response);
+
+	// 		newTask.value = '';
+	// 	};
+
+	// 	error.value = false;
 </script>
 <template>
 	<div>
 		<h2>TASKS</h2>
-		<TaskForm v-model="newTask" :error="error" @submit="createNewTask" />
-		<TaskList :taskItems="taskStore.getOrderedTasks.reverse()" />
+		<TaskForm
+			v-model="newTask.title"
+			:error="error"
+			@submit="taskStore.createTask(newTask)"
+		/>
+		<TaskList :taskItems="taskStore.getOrderedTasks" />
 	</div>
 </template>
