@@ -64,6 +64,7 @@ export const useApi = async <T>(
 	return $fetch(url, {
 		credentials: 'include',
 		baseURL,
+		headers,
 		...opts
 	});
 };

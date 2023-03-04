@@ -164,12 +164,14 @@ const actions = {
 
 	async deleteTask(id: string) {
 		const response = await useApi(`tasks/${id}`, {
-			method: 'DELETE'
+			method: 'delete'
 		});
 
 		try {
 			const result = responseSchema.parse(response);
-			this.tasks = this.tasks.filter((task) => (task as Task).data.id !== id);
+			this.tasks = this.tasks.filter(
+				(task: Task) => (task as Task).data.id !== id
+			);
 		} catch (error) {
 			console.error(error);
 		}

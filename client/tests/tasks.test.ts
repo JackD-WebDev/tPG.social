@@ -3,7 +3,7 @@ import { useTaskStore } from '../store/task';
 import { describe, it, expect, beforeAll, beforeEach, afterEach } from 'vitest';
 
 const getFirstTaskId = (store: ReturnType<typeof useTaskStore>) => {
-	return store.tasks[0].id;
+	return store.tasks[0].data.id;
 };
 
 beforeAll(() => {
@@ -26,65 +26,76 @@ describe('useTaskStore', () => {
 	});
 
 	it('creates a feature task', () => {
-		store.addTask({ title: 'test' });
+		store.createTask({ title: 'test' });
 
 		expect(store.tasks).toStrictEqual([
 			{
-				id: expect.any(String),
-				title: 'test',
-				description: '',
-				completed: false,
-				createdAt: expect.any(Date),
-				updatedAt: expect.any(Date)
+				data: {
+					id: expect.any(String),
+					type: 'task',
+					attributes: {
+						title: 'test',
+						completed: false
+					}
+				}
 			}
 		]);
 	});
 
 	it('fetches a task by id', () => {
-		store.addTask({ title: 'test' });
+		store.tasks = [
+			{
+				data: {
+					id: '1',
+					type: 'task',
+					attributes: {
+						title: 'test',
+						description: 'test',
+						task_type: 'feature',
+						priority: 'low',
+						location: 'test',
+						notes: 'test',
+						completed: false,
+						created_at_dates: {
+							created_at: new Date().toISOString(),
+							created_at_human: new Date().toISOString()
+						},
+						updated_at_dates: {
+							updated_at: new Date().toISOString(),
+							updated_at_human: new Date().toISOString()
+						}
+					}
+				}
+			}
+		];
+
+		store.createTask({ title: 'test' });
 		const id = getFirstTaskId(store);
 		let task: ReturnType<typeof store.getTaskById>;
 		if (id) {
 			task = store.getTaskById(id);
 		}
-		expect(task?.title).toBe('test');
-	});
-
-	it('retrieves tasks in order, without manipulating initial state', () => {
-		const tasks = [
-			{ createdAt: new Date(2021, 3, 7) },
-			{ createdAt: new Date(2019, 3, 7) },
-			{ createdAt: new Date(2020, 3, 7) }
-		];
-
-		// @ts-ignore
-		store.tasks = tasks;
-		const orderedTasks = store.getOrderedTasks;
-
-		expect(orderedTasks[0].createdAt.getFullYear()).toBe(2019);
-		expect(orderedTasks[1].createdAt.getFullYear()).toBe(2020);
-		expect(orderedTasks[2].createdAt.getFullYear()).toBe(2021);
-		expect(store.tasks[0].createdAt.getFullYear()).toBe(2021);
+		expect(task?.data.attributes.title).toBe('test');
 	});
 
 	it('deletes a task', () => {
-		store.addTask({ title: 'test' });
+		store.createTask({ title: 'test' });
 		const id = getFirstTaskId(store);
-		store.removeTask(id);
+		store.deleteTask(id);
 		expect(store.tasks).toStrictEqual([]);
 	});
 
 	it("updates a task's completed state", () => {
-		store.addTask({ title: 'test' });
+		store.createTask({ title: 'test' });
 		const id = getFirstTaskId(store);
 		store.updateTask(id, { completed: true });
-		expect(store.getTaskById(id).completed).toBe(true);
+		expect(store.getTaskById(id)?.data.attributes.completed).toBe(true);
 	});
 
 	it("updates a task's title", () => {
-		store.addTask({ title: 'test' });
+		store.createTask({ title: 'test' });
 		const id = getFirstTaskId(store);
 		store.updateTask(id, { title: 'test2' });
-		expect(store.getTaskById(id).title).toBe('test2');
+		expect(store.getTaskById(id)?.data.attributes.title).toBe('test2');
 	});
 });

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 	import { useAuthStore } from '~~/store/auth';
+	import { z } from 'zod';
 
 	const authStore = useAuthStore();
 
@@ -10,6 +11,20 @@
 	const auth = computed(() => {
 		return authStore.auth;
 	});
+
+	const loginSchema = z.object({
+		username: z.string(),
+		password: z.string()
+	});
+
+	// const login = async (data: z.infer<typeof loginSchema>) => {
+	// 	const response = await useApi('login', {
+	// 		method: 'POST',
+	// 		body: data
+	// 	});
+	// 	authData.value = response;
+	// 	authStore.fetchAuth();
+	// };
 
 	const login = async () => {
 		// @ts-ignore
