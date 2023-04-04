@@ -61,7 +61,7 @@ services:
     image: node:current-alpine
     working_dir: /var/www/html
     user: node
-    command: npm run dev
+    command: sh -c 'npm run dev'
     volumes:
       - ./client:/var/www/html
     ports:
@@ -69,16 +69,6 @@ services:
     environment:
       NODE_ENV: development
       HOST: 0.0.0.0
-  tracker:
-    build:
-      context: .
-      dockerfile: dockerfiles/node.dockerfile
-    environment:
-      HOST: 0.0.0.0
-    volumes:
-      - ./tracker:/var/www/html
-    depends_on:
-      - server
 networks:
   default:
     name: tpg

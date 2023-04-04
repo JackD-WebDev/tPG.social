@@ -27,3 +27,4 @@ api/.idea
 api/.vscode
 supervisord.log
 node_modules
+.idea

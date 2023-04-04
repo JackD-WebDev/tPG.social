@@ -48,7 +48,7 @@ class TaskController extends Controller
         $tasks = $this->tasks->withCriteria([
             new LatestFirst(),
             // new EagerLoad(['checklistItems']),
-            new ForUser(auth()->id())
+            // new ForUser(auth()->id())
         ])->all();
 
         return $this->responseHelper->resourceResponse(

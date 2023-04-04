@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 export const taskSchema = z.object({
 	data: z.object({
-		id: z.string(),
+		task_id: z.string(),
 		type: z.string(),
 		attributes: z.object({
 			title: z.string(),
@@ -47,7 +47,7 @@ export const collectionSchema = z.object({
 
 export interface Task {
 	data: {
-		id: string;
+		task_id: string;
 		type: 'task';
 		attributes: {
 			title: string;
@@ -77,11 +77,6 @@ interface TaskState {
 export interface NewTask {
 	title: string;
 }
-
-export const newTaskSchema = z.object({
-	title: z.string()
-});
-
 export interface UpdateTask {
 	title?: string;
 	description?: string;
@@ -92,6 +87,10 @@ export interface UpdateTask {
 	completed?: boolean;
 }
 
+export const newTaskSchema = z.object({
+	title: z.string()
+});
+
 const state = (): TaskState => ({
 	tasks: []
 });
@@ -100,9 +99,13 @@ const getters = {
 	getTasks(state: TaskState) {
 		return state.tasks;
 	},
-	getTaskById: (state: TaskState) => (id: string) => {
-		return state.tasks.find((task) => !!task && (task as Task).data.id === id);
+
+	getTaskById: (state: TaskState) => (task_id: string) => {
+		return state.tasks.find(
+			(task) => !!task && (task as Task).data.task_id === task_id
+		);
 	},
+
 	getOrderedTasks: (state: TaskState) => {
 		return [...state.tasks].sort(
 			// sort by completed, then by priority, then by date
@@ -126,8 +129,9 @@ const actions = {
 	async fetchTasks() {
 		try {
 			const collection = await useApi('tasks', { method: 'GET' });
+			// const collection = await $fetch('localhost:3000/api/tasks');
 			const result = collectionSchema.parse(collection);
-			this.tasks = result.data;
+			this.$patch({ tasks: result.data });
 		} catch (error) {
 			console.error(error);
 		}
@@ -143,13 +147,14 @@ const actions = {
 			const result = responseSchema.parse(response);
 			this.tasks.unshift(result.data);
 			newTask.title = '';
+			return result;
 		} catch (error) {
 			console.error(error);
 		}
 	},
 
-	async updateTask(id: string, updatedTask: UpdateTask) {
-		const response = await useApi(`tasks/${id}`, {
+	async updateTask(task_id: string, updatedTask: UpdateTask) {
+		const response = await useApi(`tasks/${task_id}`, {
 			method: 'PUT',
 			body: JSON.stringify(updatedTask)
 		});
@@ -157,21 +162,23 @@ const actions = {
 		try {
 			const result = responseSchema.parse(response);
 			this.tasks.unshift(result.data);
+			return result;
 		} catch (error) {
 			console.error(error);
 		}
 	},
 
-	async deleteTask(id: string) {
-		const response = await useApi(`tasks/${id}`, {
-			method: 'delete'
+	async deleteTask(task_id: string) {
+		const response = await useApi(`tasks/${task_id}`, {
+			method: 'DELETE'
 		});
 
 		try {
 			const result = responseSchema.parse(response);
 			this.tasks = this.tasks.filter(
-				(task: Task) => (task as Task).data.id !== id
+				(task: Task) => (task as Task).data.task_id !== task_id
 			);
+			return result;
 		} catch (error) {
 			console.error(error);
 		}

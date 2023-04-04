@@ -2,22 +2,15 @@ import { FetchOptions } from 'unenv/runtime/fetch';
 
 interface NitroFetchOptions<T> extends FetchOptions {
 	method?:
-		| 'delete'
-		| 'get'
+		| 'DELETE'
 		| 'GET'
-		| 'head'
 		| 'HEAD'
 		| 'PATCH'
-		| 'post'
 		| 'POST'
-		| 'put'
 		| 'PUT'
-		| 'connect'
 		| 'CONNECT'
 		| 'OPTIONS'
-		| 'options'
-		| 'TRACE'
-		| 'trace';
+		| 'TRACE';
 	data?: T;
 }
 
@@ -51,6 +44,7 @@ export const useApi = async <T>(
 
 	const headers: HeadersInit = {
 		Referer,
+		'Access-Control-Allow-Origin': Referer,
 		Accept: 'application/json',
 		'Content-Type': 'application/json',
 		'X-XSRF-TOKEN': token ?? '',

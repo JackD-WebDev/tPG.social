@@ -9,11 +9,11 @@
 	}>();
 </script>
 <template>
-	<div v-if="taskItems.length > 0">
+	<ul v-if="taskItems.length > 0">
 		<TaskItem
 			v-for="taskItem in taskItems"
-			:key="taskItem.data.id"
+			:key="taskItem.data.task_id"
 			:task="taskItem"
 		/>
-	</div>
+	</ul>
 </template>

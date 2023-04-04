@@ -1,5 +1,4 @@
-<?php
-
+<?php 
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
@@ -27,7 +26,7 @@ class TaskResource extends JsonResource
         return [
             'data' => [
                 'type' => 'tasks',
-                'id' => $this->id,
+                'task_id' => $this->id,
                 'attributes' => [
                     'title' => $this->title,
                     'description' => $this->description,

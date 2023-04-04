@@ -13,29 +13,47 @@
 
 	const updateTask = (task: Task) => {
 		const completionStatus = task.data.attributes.completed;
-		taskStore.updateTask(task.data.id, { completed: !completionStatus });
+		taskStore.updateTask(task.data.task_id, { completed: !completionStatus });
 	};
 </script>
 
 <template>
-	<div>
-		<pre>{{ task }}</pre>
+	<li>
 		<h3
 			:class="{ done: task.data.attributes.completed }"
 			:title="task.data.attributes.title"
 		>
-			{{ task.data.attributes.title }}
+			{{ task.data.attributes.title.toUpperCase() }}
 		</h3>
-		<p>
+		<p v-if="task.data.attributes.description != null">
 			{{ task.data.attributes.description }}
 		</p>
-		<p>
-			{{ task.data.attributes.created_at_dates.created_at_human }}
+		<p>Created: {{ task.data.attributes.created_at_dates.created_at_human }}</p>
+		<p>Updated: {{ task.data.attributes.updated_at_dates.updated_at_human }}</p>
+		<p>Priority: {{ task.data.attributes.priority }}</p>
+		<p>Type: {{ task.data.attributes.task_type }}</p>
+		<p>Location: {{ task.data.attributes.location }}</p>
+		<p v-if="task.data.attributes.notes != null">
+			Notes: {{ task.data.attributes.notes }}
 		</p>
-		<button @click="updateTask(task)">
+		<button class="btn" @click="updateTask(task)">
 			{{ task.data.attributes.completed ? 'UNDO' : 'DONE' }}
 		</button>
-		<button @click="deleteTask(task.data.id)">DELETE</button>
-		<NuxtLink class="btn" :to="`/tasks/${task.data.id}`">EDIT</NuxtLink>
-	</div>
+		<button class="btn" @click="deleteTask(task.data.task_id)">DELETE</button>
+		<NuxtLink class="btn" :to="`/tasks/${task.data.task_id}`">EDIT</NuxtLink>
+	</li>
 </template>
+
+<style scoped lang="scss">
+	h3 {
+		font-weight: 700;
+		font-size: 2rem;
+	}
+	li {
+		padding: 5rem;
+		border: 0.5rem solid var(--primary-color);
+		border-radius: 3rem;
+		margin: 2rem 2rem;
+		display: inline-block;
+	}
+</style>
